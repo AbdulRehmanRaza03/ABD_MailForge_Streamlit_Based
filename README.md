@@ -484,7 +484,7 @@ Google Account → Security → App Passwords → Delete "MailForge" → Generat
 <div align="center">
 
 ### Abdul Rehman Raza
-**B.S. Artificial Intelligence — The Superior University, Lahore**
+**B.S. Data Science — The Superior University, Lahore**
 
 *Full-Stack Developer · AI Engineer · E-commerce Entrepreneur*
 

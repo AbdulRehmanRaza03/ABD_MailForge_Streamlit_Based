@@ -1,19 +1,29 @@
-# 🔥 ABD MailForge — Bulk Email Sender Bot
+# ✉️ ABD MailForge v2.0 — Bulk Email Sender Bot
 
-> Made by **Abdulll,s** | [Connect on LinkedIn](https://www.linkedin.com/in/abdul-rehman-raza-7a125b332)
+> **Made by Abdulll,s** · [Connect on LinkedIn](https://www.linkedin.com/in/abdul-rehman-raza-7a125b332)
 
 ---
 
-## 📌 Project Overview
+## 🚀 What Is ABD MailForge?
 
-ABD MailForge ek powerful bulk email sender bot hai jo Streamlit pe bana hai.
-- Gmail SMTP se emails bhejta hai
-- CSV ya text paste se 400 emails tak support karta hai
-- Random 15-45 sec interval (spam se bachao)
-- 3-5 templates, random pick per email
-- PDF attachment support
-- Supabase mein permanent logs
-- Mobile aur PC dono pe kaam karta hai
+ABD MailForge is a professional bulk email sender built with Streamlit and Python. It uses Gmail SMTP to send personalized emails to up to 400 recipients per session, with random delays and template rotation to reduce spam flagging. All send history is stored permanently in Supabase PostgreSQL.
+
+---
+
+## ✅ Features
+
+| Feature | Detail |
+|---------|--------|
+| Gmail SMTP | Sends via your own Gmail securely |
+| CSV or Paste | Upload CSV or paste emails directly |
+| Max Recipients | 400 per session |
+| Send Interval | Random 15–45 seconds per email |
+| Templates | Up to 5 — randomly selected per email |
+| PDF Attachment | Optional — same PDF per batch |
+| Dashboard | Full send history and stats |
+| Database | Supabase PostgreSQL — permanent storage |
+| Mobile Friendly | Works on mobile browser |
+| Security | App Password only — real password never stored |
 
 ---
 
@@ -21,176 +31,206 @@ ABD MailForge ek powerful bulk email sender bot hai jo Streamlit pe bana hai.
 
 ```
 abd-mailforge/
-├── app.py                  → Main Streamlit app (UI + logic)
-├── mailer.py               → Gmail SMTP sending
-├── db.py                   → Supabase database operations
-├── requirements.txt        → Python libraries
-├── supabase_setup.sql      → DB tables banane ka SQL
+├── app.py                → Main Streamlit app (UI + routing)
+├── mailer.py             → Gmail SMTP sending logic
+├── db.py                 → Supabase database operations
+├── requirements.txt      → Python dependencies
+├── supabase_setup.sql    → SQL to create database tables
 ├── .streamlit/
-│   ├── config.toml         → Theme settings (maroon + black)
-│   └── secrets.toml        → Supabase credentials (local only)
-└── README.md               → Yeh file
+│   ├── config.toml       → Theme and server settings
+│   └── secrets.toml      → Your Supabase credentials (local only)
+├── .gitignore            → Excludes secrets from GitHub
+└── README.md             → This file
 ```
 
 ---
 
-## ✅ STEP 1 — Gmail App Password Banao
+## 📋 Setup Guide
 
-1. **Google Account** kholo → **Security**
-2. **2-Step Verification** enable karo (agar nahi hai)
-3. **App Passwords** dhundo (search box mein likho)
-4. App: **Mail**, Device: **Other** → **Generate**
-5. 16-character code milega → **save kar lo**
+### Step 1 — Get Gmail App Password
 
-> ⚠️ Yeh apna real Gmail password NAHI hai — App Password alag hota hai
+1. Go to [myaccount.google.com](https://myaccount.google.com)
+2. Click **Security** → **2-Step Verification** → **App Passwords**
+3. Select App: **Mail**, Device: **Other** → Name it "MailForge"
+4. Click **Generate** → Copy the 16-character code
+5. This is your App Password — save it securely
 
----
-
-## ✅ STEP 2 — Supabase Setup
-
-1. **[supabase.com](https://supabase.com)** pe free account banao
-2. **New Project** create karo
-3. Project ready hone ke baad:
-   - Left menu → **SQL Editor**
-   - `supabase_setup.sql` file kholo (is project mein)
-   - Saara SQL copy karo → SQL Editor mein paste karo → **Run**
-4. Left menu → **Settings** → **API**
-   - **Project URL** copy karo
-   - **anon / public key** copy karo
+> ⚠️ This is NOT your real Gmail password. It is a separate access key for sending emails only.
 
 ---
 
-## ✅ STEP 3 — Local Test
+### Step 2 — Set Up Supabase
 
-### secrets.toml banao:
-`.streamlit/secrets.toml` file kholo aur fill karo:
+1. Go to [supabase.com](https://supabase.com) and create a free account
+2. Click **New Project** — give it a name and password
+3. Once the project is ready, go to **SQL Editor** (left sidebar)
+4. Open the `supabase_setup.sql` file from this project
+5. Copy all the SQL → paste into SQL Editor → click **Run**
+6. Go to **Settings** → **API**
+7. Copy your **Project URL** and **anon/public key**
+
+---
+
+### Step 3 — Add Supabase Column for Password
+
+In Supabase → Table Editor → **sessions** table:
+1. Click the **+** button to add a new column
+2. Name: `app_password`, Type: `text`, Default: empty
+3. Save
+
+---
+
+### Step 4 — Configure Secrets (Local)
+
+Open `.streamlit/secrets.toml` and fill in:
+
 ```toml
 [supabase]
-url = "https://xxxxx.supabase.co"
-key = "eyJhbGciOiJIUzI1NiIs..."
+url = "https://your-project-id.supabase.co"
+key = "your-anon-public-key-here"
 ```
 
-### Install libraries:
+---
+
+### Step 5 — Install Dependencies
+
 ```bash
 pip install -r requirements.txt
 ```
 
-### Run karo:
+---
+
+### Step 6 — Run Locally
+
 ```bash
 streamlit run app.py
 ```
 
-Browser mein khulega: `http://localhost:8501`
+Open your browser at `http://localhost:8501` and test the app.
 
 ---
 
-## ✅ STEP 4 — GitHub Pe Push Karo
+### Step 7 — Push to GitHub
 
 ```bash
-# GitHub pe new repo banao: "abd-mailforge"
 git init
 git add .
-git commit -m "ABD MailForge v1.0"
+git commit -m "ABD MailForge v2.0"
 git remote add origin https://github.com/YOUR_USERNAME/abd-mailforge.git
 git push -u origin main
 ```
 
-> ⚠️ `.streamlit/secrets.toml` GitHub pe mat daalo!
-> `.gitignore` mein add karo:
-```
-.streamlit/secrets.toml
-__pycache__/
-*.pyc
-.env
-```
+> ⚠️ Never push your `secrets.toml` to GitHub. It is listed in `.gitignore` automatically.
 
 ---
 
-## ✅ STEP 5 — Streamlit Cloud Deploy
+### Step 8 — Deploy on Streamlit Cloud
 
-1. **[share.streamlit.io](https://share.streamlit.io)** pe jao
-2. **New app** → GitHub repo select karo
-3. **Main file:** `app.py`
-4. **Advanced settings** → **Secrets** mein yeh daalo:
+1. Go to [share.streamlit.io](https://share.streamlit.io)
+2. Click **New app**
+3. Select your GitHub repository
+4. Main file path: `app.py`
+5. Click **Advanced settings** → **Secrets**
+6. Paste your secrets:
+
 ```toml
 [supabase]
-url = "https://xxxxx.supabase.co"
-key = "eyJhbGciOiJIUzI1NiIs..."
+url = "https://your-project-id.supabase.co"
+key = "your-anon-public-key-here"
 ```
-5. **Deploy** dabao
-6. Link milega: `https://abd-mailforge.streamlit.app`
+
+7. Click **Deploy**
+8. Your live link will be: `https://abd-mailforge.streamlit.app`
 
 ---
 
-## ✅ STEP 6 — UptimeRobot Setup (App Jaaga Rahe)
+### Step 9 — Set Up UptimeRobot (Keep App Alive)
 
-1. **[uptimerobot.com](https://uptimerobot.com)** pe free account
-2. **Add Monitor** → **HTTP(s)**
-3. URL: `https://abd-mailforge.streamlit.app`
-4. Interval: **5 minutes**
-5. **Create Monitor** → Done ✓
+Streamlit Cloud sleeps inactive apps after 15 minutes.
 
-App 24/7 active rahegi — so nahi jaegi.
+1. Go to [uptimerobot.com](https://uptimerobot.com) and create a free account
+2. Click **Add New Monitor**
+3. Type: **HTTP(s)**
+4. URL: your Streamlit app link
+5. Interval: **5 minutes**
+6. Click **Create Monitor**
 
----
-
-## 📱 Mobile Use
-
-- Streamlit link mobile browser mein kholo
-- Sab kuch mobile pe kaam karta hai
-- **Sending ke waqt tab khula rakho** — band kiya toh sending ruk jayegi
-- Chrome ya Safari dono pe kaam karta hai
+Your app will now stay awake 24/7 for free.
 
 ---
 
-## 🔐 Security
+## 🔒 Security Guide
 
-| Feature | Detail |
-|---------|--------|
-| Login | Gmail + 16-char App Password |
-| Wrong attempts | 5 ke baad block |
-| Password store | Nahi hota (session only) |
-| Data | Supabase mein encrypted |
+### App Password Safety
+- Your real Gmail password is never entered or stored
+- App Password only allows sending emails — no other Gmail access
+- If compromised: Google Account → Security → App Passwords → Delete "MailForge"
+- Generate a new one and update it in Settings
 
----
+### Supabase Data Privacy
+- Only you can access your Supabase dashboard
+- Send logs are stored privately under your account
+- No third party can read your data
 
-## 📊 Features Summary
-
-| Feature | Status |
-|---------|--------|
-| CSV upload | ✅ |
-| Text paste (max 400) | ✅ |
-| PDF attachment | ✅ |
-| 3-5 templates | ✅ |
-| Random template pick | ✅ |
-| Random 15-45s interval | ✅ |
-| Live progress bar | ✅ |
-| Send logs (Supabase) | ✅ |
-| Dashboard + stats | ✅ |
-| Mobile friendly | ✅ |
-| Stop sending button | ✅ |
-| 5-attempt block | ✅ |
+### Keep 2-Step Verification ON
+- App Passwords require 2-Step Verification to be enabled
+- This also protects your Google Account from unauthorized access
 
 ---
 
-## ❓ Troubleshooting
+## ⚠️ Important Usage Warnings
 
-**Login fail ho raha hai?**
-→ App Password check karo — 16 chars hone chahiye, spaces hata ke try karo
+**Keep Browser Tab Open**
+Sending stops if you close the tab, switch apps, or lock your screen. Keep the tab visible and active throughout the entire sending session.
 
-**Emails nahi ja rahi?**
-→ Gmail mein "Less secure app access" OFF hai? → App Password use karo, woh sahi hai
-→ Gmail ka daily limit: ~500 emails/day
+**Mobile Users**
+Keep your screen on during sending. Plug your phone in if possible. Do not switch to another app.
 
-**Supabase error?**
-→ URL aur Key dobara check karo secrets.toml mein
+**PC / Laptop Users**
+Move your mouse occasionally to prevent sleep mode. Adjust power settings to disable screen sleep during sending.
 
-**App slow hai?**
-→ UptimeRobot laga hai? Laga lo — app instant open hogi
+**Internet Connection**
+Any disconnect will cause that email attempt to fail. Use a mobile hotspot for the most stable connection.
+
+**Gmail Daily Limits**
+- New Gmail accounts: 50–100 emails/day
+- Regular accounts: 100–200 emails/day
+- Older active accounts: up to 400 emails/day
+- Gmail official limit: 500/day — stay well below it
 
 ---
 
-## 📬 Contact
+## 🛠️ Troubleshooting
 
-**Made by Abdulll,s**
-🔗 [LinkedIn — Abdul Rehman Raza](https://www.linkedin.com/in/abdul-rehman-raza-7a125b332)
+**Login fails?**
+→ Make sure App Password is exactly 16 characters with no spaces, or remove spaces and try again.
+
+**Emails not going through?**
+→ Check that 2-Step Verification is ON in your Google Account.
+→ Try revoking the App Password and generating a new one.
+
+**Dashboard shows no data?**
+→ Go to Supabase → Authentication → Policies → Disable RLS on all three tables (send_logs, sessions, templates).
+
+**App is slow to open?**
+→ Set up UptimeRobot as described in Step 9.
+
+**Streamlit secrets error?**
+→ Double-check that your URL and key in secrets match exactly what Supabase shows.
+
+---
+
+## 🔗 My Other Projects
+
+- **ABD Screen Recorder** → [abd-screen-recorder-web-app.streamlit.app](https://abd-screen-recorder-web-app.streamlit.app/)
+- **ABD Cursor Mover & Game Site** → [abdulrehmanraza03.github.io/ABD_Cursor_Mover_Site](https://abdulrehmanraza03.github.io/ABD_Cursor_Mover_Site/)
+
+---
+
+## 👤 About
+
+**Made by Abdulll,s (Abdul Rehman Raza)**
+B.S. Artificial Intelligence — The Superior University, Lahore
+
+🔗 [LinkedIn Profile](https://www.linkedin.com/in/abdul-rehman-raza-7a125b332)
+💻 [GitHub](https://github.com/AbdulRehmanRaza03)

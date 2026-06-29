@@ -13,7 +13,7 @@ def get_client() -> Client:
 def check_blocked(gmail: str) -> bool:
     try:
         db = get_client()
-        res = db.table("sessions").select("*").eq("gmail", gmail).execute()
+        res = db.table("sessions").select("is_blocked,failed_attempts").eq("gmail", gmail).execute()
         if res.data:
             return res.data[0].get("is_blocked", False)
         return False
@@ -79,8 +79,8 @@ def save_session(gmail: str, app_password: str):
                 "is_blocked": False,
                 "app_password": app_password
             }).execute()
-    except Exception as e:
-        st.error(f"Session save error: {e}")
+    except:
+        pass
 
 
 def save_templates(gmail: str, templates: list):
@@ -96,8 +96,8 @@ def save_templates(gmail: str, templates: list):
             db.table("templates").update(data).eq("gmail", gmail).execute()
         else:
             db.table("templates").insert(data).execute()
-    except Exception as e:
-        st.error(f"Template save error: {e}")
+    except:
+        pass
 
 
 def load_templates(gmail: str) -> list:
@@ -109,6 +109,39 @@ def load_templates(gmail: str) -> list:
         return []
     except:
         return []
+
+
+def save_send_progress(gmail: str, sent_emails: list, total: int):
+    """Save which emails have been sent so we can resume"""
+    try:
+        db = get_client()
+        existing = db.table("sessions").select("*").eq("gmail", gmail).execute()
+        progress_data = json.dumps({"sent": sent_emails, "total": total, "saved_at": datetime.utcnow().isoformat()})
+        if existing.data:
+            db.table("sessions").update({"send_progress": progress_data}).eq("gmail", gmail).execute()
+    except:
+        pass
+
+
+def load_send_progress(gmail: str) -> dict:
+    """Load saved send progress"""
+    try:
+        db = get_client()
+        res = db.table("sessions").select("send_progress").eq("gmail", gmail).execute()
+        if res.data and res.data[0].get("send_progress"):
+            return json.loads(res.data[0]["send_progress"])
+        return {}
+    except:
+        return {}
+
+
+def clear_send_progress(gmail: str):
+    """Clear progress after completion"""
+    try:
+        db = get_client()
+        db.table("sessions").update({"send_progress": None}).eq("gmail", gmail).execute()
+    except:
+        pass
 
 
 def log_send(gmail: str, recipient: str, subject: str, template_used: str, status: str, error: str = None):
@@ -123,7 +156,7 @@ def log_send(gmail: str, recipient: str, subject: str, template_used: str, statu
             "error": error or "",
             "sent_at": datetime.utcnow().isoformat()
         }).execute()
-    except Exception as e:
+    except:
         pass
 
 
@@ -150,15 +183,7 @@ def get_stats(gmail: str) -> dict:
         sent = len([x for x in data if x["status"] == "sent"])
         failed = len([x for x in data if x["status"] == "failed"])
         today = datetime.utcnow().date().isoformat()
-        today_sent = len([
-            x for x in data
-            if x["status"] == "sent" and str(x.get("sent_at", ""))[:10] == today
-        ])
-        return {
-            "total": total,
-            "sent": sent,
-            "failed": failed,
-            "today_sent": today_sent
-        }
+        today_sent = len([x for x in data if x["status"] == "sent" and str(x.get("sent_at", ""))[:10] == today])
+        return {"total": total, "sent": sent, "failed": failed, "today_sent": today_sent}
     except:
         return {"total": 0, "sent": 0, "failed": 0, "today_sent": 0}

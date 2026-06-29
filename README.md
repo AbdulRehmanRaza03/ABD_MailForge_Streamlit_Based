@@ -35,6 +35,7 @@
 
 ## 📋 Table of Contents
 
+<<<<<<< HEAD
 - [What Is ABD MailForge?](#-what-is-abd-mailforge)
 - [Key Features](#-key-features)
 - [System Architecture](#-system-architecture)
@@ -48,6 +49,40 @@
 - [Troubleshooting](#-troubleshooting)
 - [My Projects](#-other-projects-by-abdullls)
 - [About the Developer](#-about-the-developer)
+=======
+- [📋 Table of Contents](#-table-of-contents)
+- [📬 What Is ABD MailForge?](#-what-is-abd-mailforge)
+  - [🎯 Use Cases](#-use-cases)
+- [✅ Key Features](#-key-features)
+  - [📧 Email Engine](#-email-engine)
+  - [📊 Data \& Dashboard](#-data--dashboard)
+  - [🔐 Security](#-security)
+  - [☁️ Deployment](#️-deployment)
+- [🏗️ System Architecture](#️-system-architecture)
+- [🛠️ Tech Stack](#️-tech-stack)
+- [🗂️ Project Structure](#️-project-structure)
+  - [File Responsibilities](#file-responsibilities)
+- [🔄 How It Works — Flow Diagram](#-how-it-works--flow-diagram)
+- [📋 Setup Guide](#-setup-guide)
+  - [Step 1 — Get Gmail App Password](#step-1--get-gmail-app-password)
+  - [Step 2 — Set Up Supabase Database](#step-2--set-up-supabase-database)
+  - [Step 3 — Add App Password Column](#step-3--add-app-password-column)
+  - [Step 4 — Configure Secrets (Local Only)](#step-4--configure-secrets-local-only)
+  - [Step 5 — Install Dependencies](#step-5--install-dependencies)
+  - [Step 6 — Run Locally](#step-6--run-locally)
+  - [Step 7 — Push to GitHub](#step-7--push-to-github)
+- [☁️ Deployment: Streamlit Cloud](#️-deployment-streamlit-cloud)
+  - [⏰ Keep App Alive with UptimeRobot](#-keep-app-alive-with-uptimerobot)
+- [🔐 Security Model](#-security-model)
+- [📊 Usage Limits \& Best Practices](#-usage-limits--best-practices)
+  - [Gmail Daily Send Limits](#gmail-daily-send-limits)
+  - [Best Practices for High Deliverability](#best-practices-for-high-deliverability)
+  - [Device Tips During Sending](#device-tips-during-sending)
+- [🛠️ Troubleshooting](#️-troubleshooting)
+- [🚀 Other Projects by Abdulll,s](#-other-projects-by-abdullls)
+- [👤 About the Developer](#-about-the-developer)
+  - [Abdul Rehman Raza](#abdul-rehman-raza)
+>>>>>>> e64b9a5 (Updated project files)
 
 ---
 
@@ -484,7 +519,11 @@ Google Account → Security → App Passwords → Delete "MailForge" → Generat
 <div align="center">
 
 ### Abdul Rehman Raza
+<<<<<<< HEAD
 **B.S. Data Science — The Superior University, Lahore**
+=======
+**B.S. Artificial Intelligence — The Superior University, Lahore**
+>>>>>>> e64b9a5 (Updated project files)
 
 *Full-Stack Developer · AI Engineer · E-commerce Entrepreneur*
 
